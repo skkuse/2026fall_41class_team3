@@ -11,7 +11,7 @@
 | 영역 | 기술 |
 |---|---|
 | 프론트엔드 | React, Vite |
-| 백엔드 | Python, FastAPI |
+| 백엔드 | Python, Flask |
 | 에이전트 | LangChain, OpenAI API |
 | DB | SQLite, ChromaDB |
 | 지도 | 카카오 지도 JavaScript SDK (프론트), 카카오 로컬 REST API (백엔드) |
@@ -20,7 +20,7 @@
 ```
 .
 ├── frontend/          # React + Vite 웹 클라이언트
-├── backend/           # FastAPI 서버
+├── backend/           # Flask 서버
 │   ├── agent/         # 에이전트 루프, 시스템 프롬프트
 │   ├── tools/         # 에이전트 툴 (정의 + 실행 함수)
 │   ├── services/      # 외부 API 클라이언트 (카카오 등)
