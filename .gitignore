@@ -2,7 +2,7 @@
 .env.*
 !.env.example
 
-# ===== Python / FastAPI =====
+# ===== Python / Flask =====
 __pycache__/
 *.py[cod]
 .venv/
