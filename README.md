@@ -19,14 +19,18 @@
 ## 폴더 구조안
 ```
 .
-├── frontend/          # React + Vite 웹 클라이언트
-├── backend/           # Flask 서버
-│   ├── agent/         # 에이전트 루프, 시스템 프롬프트
-│   ├── tools/         # 에이전트 툴 (정의 + 실행 함수)
-│   ├── services/      # 외부 API 클라이언트 (카카오 등)
-│   ├── api/           # HTTP 엔드포인트
-│   └── db/            # DB 모델, seed 데이터
-├── docs/              # 디자인 명세서, 공통 합의서, API 명세
+├── frontend/              # React + Vite 웹 클라이언트
+├── backend/               # Flask 서버
+│   ├── app.py             # 서버 진입점
+│   ├── agent/             # 에이전트 루프, 시스템 프롬프트
+│   ├── tools/             # 에이전트 툴 (정의 + 실행 함수)
+│   ├── services/          # 여러 곳에서 쓰는 외부 서비스 연동 (메일 발송, 카카오 등)
+│   ├── api/               # HTTP 엔드포인트
+│   │   ├── auth/          # 이메일 인증 로그인, 세션, 내 정보 (로그인 담당)
+│   │   ├── errors.py      # 공통 오류 응답 (모든 파트가 사용)
+│   │   └── guards.py      # 공통 로그인 검사 (모든 파트가 사용)
+│   ├── db/                # DB 접근 함수
+│   └── config/            # 캠퍼스 좌표 등 공통 설정
+├── docs/                  # 디자인 명세서, 공통 합의서, API 명세, 로그인 설계
 ├── .gitignore
 └── README.md
-```
