@@ -50,7 +50,6 @@ class Faculty(Base):
     name: Mapped[str] = mapped_column(Text, nullable=False)
     faculty_id: Mapped[int] = mapped_column(Integer, primary_key=True)
 
-    schedule: Mapped[list['Schedule']] = relationship('Schedule', secondary='schedule_faculty', back_populates='faculty')
     department: Mapped[list['Department']] = relationship('Department', back_populates='faculty')
     board: Mapped[list['Board']] = relationship('Board', back_populates='faculty')
     notice_tag: Mapped[list['NoticeTag']] = relationship('NoticeTag', back_populates='faculty')
@@ -95,7 +94,6 @@ class Notice(Base):
     summary_target: Mapped[Optional[str]] = mapped_column(Text)
     summary_how: Mapped[Optional[str]] = mapped_column(Text)
 
-    schedule: Mapped[list['Schedule']] = relationship('Schedule', back_populates='notice')
     notice_tag: Mapped[list['NoticeTag']] = relationship('NoticeTag', back_populates='notice')
     notice_posting: Mapped[list['NoticePosting']] = relationship('NoticePosting', back_populates='notice')
     notification: Mapped[list['Notification']] = relationship('Notification', back_populates='notice')
@@ -180,14 +178,11 @@ class RegulationVersion(Base):
 class Schedule(Base):
     __tablename__ = 'schedule'
 
-    title: Mapped[str] = mapped_column(Text, nullable=False)
+    notice_title: Mapped[str] = mapped_column(Text, nullable=False)
     start_at: Mapped[str] = mapped_column(Text, nullable=False)
     all_day: Mapped[int] = mapped_column(Integer, nullable=False, server_default=text('0'))
     kind: Mapped[str] = mapped_column(Text, nullable=False)
-    source_kind: Mapped[str] = mapped_column(Text, nullable=False)
     is_active: Mapped[int] = mapped_column(Integer, nullable=False, server_default=text('1'))
-    collected_at: Mapped[str] = mapped_column(Text, nullable=False)
-    updated_at: Mapped[str] = mapped_column(Text, nullable=False)
     schedule_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     description: Mapped[Optional[str]] = mapped_column(Text)
     end_at: Mapped[Optional[str]] = mapped_column(Text)
@@ -196,11 +191,11 @@ class Schedule(Base):
     organizer: Mapped[Optional[str]] = mapped_column(Text)
     source_url: Mapped[Optional[str]] = mapped_column(Text)
     image_path: Mapped[Optional[str]] = mapped_column(Text)
-    notice_id: Mapped[Optional[int]] = mapped_column(ForeignKey('notice.notice_id'))
+    event_title: Mapped[Optional[str]] = mapped_column(Text)
+    board_id: Mapped[Optional[str]] = mapped_column(Text)
+    notice_id: Mapped[Optional[str]] = mapped_column(Text)
 
-    faculty: Mapped[list['Faculty']] = relationship('Faculty', secondary='schedule_faculty', back_populates='schedule')
     dept: Mapped[list['Department']] = relationship('Department', secondary='schedule_department', back_populates='schedule')
-    notice: Mapped[Optional['Notice']] = relationship('Notice', back_populates='schedule')
     calendar_export: Mapped[list['CalendarExport']] = relationship('CalendarExport', back_populates='schedule')
     notification: Mapped[list['Notification']] = relationship('Notification', back_populates='schedule')
 
@@ -342,13 +337,6 @@ t_schedule_department = Table(
     'schedule_department', Base.metadata,
     Column('schedule_id', ForeignKey('schedule.schedule_id'), primary_key=True),
     Column('dept_id', ForeignKey('department.dept_id'), primary_key=True)
-)
-
-
-t_schedule_faculty = Table(
-    'schedule_faculty', Base.metadata,
-    Column('schedule_id', ForeignKey('schedule.schedule_id'), primary_key=True),
-    Column('faculty_id', ForeignKey('faculty.faculty_id'), primary_key=True)
 )
 
 

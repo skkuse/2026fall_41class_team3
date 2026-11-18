@@ -306,9 +306,10 @@ CREATE TABLE user_board (                                   -- 사용자가 알�
     PRIMARY KEY (user_id, board_id)
 );
 
-CREATE TABLE schedule (                                     -- [캘린더 파트 합의 전]
+CREATE TABLE schedule (                                     -- 캘린더 파트 안 (정우진 11-18)
     schedule_id      INTEGER PRIMARY KEY,
-    title            TEXT    NOT NULL,
+    notice_title     TEXT    NOT NULL,                      -- 크롤링한 원본 공지 제목
+    event_title      TEXT,                                  -- agent가 만든 일정 제목
     description      TEXT,
     start_at         TEXT    NOT NULL,
     end_at           TEXT,
@@ -317,27 +318,18 @@ CREATE TABLE schedule (                                     -- [캘린더 파트
     target_audience  TEXT,
     organizer        TEXT,
     kind             TEXT    NOT NULL CHECK (kind IN ('학사일정', '학과 행사', '공지 마감')),
-    source_kind      TEXT    NOT NULL CHECK (source_kind IN ('학사일정 게시판', '인스타그램', '공지')),
     source_url       TEXT,
     image_path       TEXT,                                  -- 파일 저장소 경로 (예: events/1/poster.jpg), 조회 시 URL로 변환
-    notice_id        INTEGER REFERENCES notice(notice_id) ON DELETE CASCADE,
+    board_id         TEXT,                                  -- 게시판 식별자 (외래 키 아님)
+    notice_id        TEXT,                                  -- 원본 게시글 번호 (외래 키 아님)
     is_active        INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)),  -- 공지 수정으로 일정이 취소되면 0
-    collected_at     TEXT    NOT NULL,
-    updated_at       TEXT    NOT NULL,
-    CHECK (end_at IS NULL OR end_at >= start_at),
-    CHECK (source_kind <> '공지' OR notice_id IS NOT NULL)
+    CHECK (end_at IS NULL OR end_at >= start_at)
 );
 
 CREATE TABLE schedule_department (                          -- 일정–학과 N:M (캘린더 파트 Event_department)
     schedule_id  INTEGER NOT NULL REFERENCES schedule(schedule_id) ON DELETE CASCADE,
     dept_id      INTEGER NOT NULL REFERENCES department(dept_id) ON DELETE CASCADE,
     PRIMARY KEY (schedule_id, dept_id)
-);
-
-CREATE TABLE schedule_faculty (                             -- 일정–학부 N:M (캘린더 파트 Event_faculty)
-    schedule_id  INTEGER NOT NULL REFERENCES schedule(schedule_id) ON DELETE CASCADE,
-    faculty_id   INTEGER NOT NULL REFERENCES faculty(faculty_id) ON DELETE CASCADE,
-    PRIMARY KEY (schedule_id, faculty_id)
 );
 
 CREATE TABLE calendar_export (                              -- Google 캘린더에 넣은 일정 (중복 등록 방지)
