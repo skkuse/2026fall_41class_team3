@@ -2,7 +2,7 @@
 
 # 인증 코드
 CODE_LENGTH = 6              # 숫자 코드 자리수
-CODE_TTL_SEC = 600           # 코드 유효 시간 (10분)
+CODE_TTL_SEC = 180           # 코드 유효 시간 (3분)
 MAX_ATTEMPTS = 5             # 코드 확인 최대 시도 횟수
 
 # 발송 제한
