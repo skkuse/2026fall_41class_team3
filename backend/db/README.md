@@ -35,6 +35,9 @@ python -m backend.db.seed_data   # 단과대학·학과·게시판·관심사 �
 | `user` | `get_user_by_id`, `get_user_by_email`, `create_user`, `update_last_login` | 로그인 |
 | `profile` | `list_departments`, `list_interests`, `department_exists`, `interests_exist`, `get_department_name`, `list_user_interest_ids`, `save_profile` | 로그인 (온보딩, `/api/departments`, `/api/interests`), 채팅 |
 | `errors` | `DbError` (잠금 시간 초과 등 일시 오류, API가 503으로 바꿈) | 공통 |
+| `schedules` (초안) | `get_all_faculties_with_departments`, `get_department_events(id, month)`, `get_department_calendar(id, month)`, `get_events_by_ids` | 캘린더 조회 (`/api/departments`, `/api/departments/{id}/events`) |
+| `schedules` (초안) | `find_events_by_notice`, `save_event_changes(events, department_id)`, `deactivate_event`, `record_processing_result`, `get_processing_result` | 일정 추출 파이프라인 |
+| `schedules` (초안) | `save_google_tokens`, `get_google_tokens`, `delete_google_connection`, `get_exported_events`, `record_export` | Google 캘린더 등록 |
 | `users` | `get_user_scope`, `list_departments` | 공통 (캘린더 `/api/users/me`, `/api/departments`) |
 | `users` | `list_keywords`, `add_keyword`, `update_keyword`, `delete_keyword`, `set_keywords` | 키워드 (채팅 tool, 가입 직후 등록) |
 | `users` | `list_user_boards`, `set_user_boards`, `list_keyword_subscribers(board_id)` | 알림 배치 |
@@ -56,4 +59,13 @@ python -m backend.db.seed_data   # 단과대학·학과·게시판·관심사 �
 - 반환은 로그인 코드 형식 `{id, email, department_id}`, 인증 코드 시각은 UTC datetime. DB 열 이름(`user_id`, `dept_id`, 암호화 이메일)은 그대로다.
 - 관심사: `interest`(선택지) + `user_interest`(고른 것). 고른 관심사의 이름은 알림 키워드로도 쓴다 (`list_keyword_subscribers`의 `keywords`에 `source: "INTEREST"`로 들어감).
 
-아직 없음: 캘린더 일정 함수, 대화 목록(이전 대화) API용 함수, Agent 검색 `search()`, 보존 기간 정리 batch(오래된 `email_code` 행 포함). `users.list_departments`와 `profile.list_departments`는 반환 형식이 달라 둘 다 두었다 (나중에 정리).
+캘린더 함수 초안 (11-22, 정우진 님 명세 기준. 바로 쓰거나 피드백 주시면 고침):
+- 함수 이름은 명세서 이름을 따랐고, 반환은 명세 6.1 응답 필드를 snake_case로 (`event_id`, `image_urls`, `title`, `start_at`, `end_at`, `is_all_day`, `location`, `organization`, `summary`, `source_url` …). camelCase 변환은 API 쪽.
+- `title`은 `event_title`(agent 생성)이 있으면 그것, 없으면 `notice_title`. `summary`는 `description` 열.
+- 일정 시각은 한국 시간 그대로 `YYYY-MM-DD`(종일) 또는 `YYYY-MM-DDTHH:MM`로 저장 (다른 테이블의 UTC 규칙과 다름). 형식이 다르면 `save_event_changes`가 ValueError.
+- `month` 조회는 그 달 앞뒤 2개월과 기간이 겹치는 일정 (명세 6.1).
+- 같은 공지(`board_id`, `notice_id`)·같은 시작/종료·같은 제목이면 KEEP, 학과 연결만 추가.
+- 처리 결과는 새 테이블 `schedule_processing` (COMPLETED/EXCLUDED/FAILED). OAuth state와 보류 중인 등록 대상은 Flask 세션에 두는 것을 제안.
+- 확인할 것: `createdAt`/`updatedAt`은 11/18 요청으로 열을 지워 지금 null로 나감 / `kind`는 LLM 출력에 없어 기본값 '학과 행사' / 이미지는 지금 한 장(`image_path`)이라 `image_urls`는 0~1개 / `schedule.board_id`가 우리 `board.board_id`(정수)와 같은 것인지.
+
+아직 없음: 대화 목록(이전 대화) API용 함수, Agent 검색 `search()`, 보존 기간 정리 batch(오래된 `email_code` 행 포함). `users.list_departments`와 `profile.list_departments`는 반환 형식이 달라 둘 다 두었다 (나중에 정리).

@@ -385,16 +385,28 @@ class CrawlRun(Base):
     board: Mapped['Board'] = relationship('Board', back_populates='crawl_run')
 
 
-class GoogleConnection(AppUser):
+class GoogleConnection(Base):
     __tablename__ = 'google_connection'
 
-    google_account_id: Mapped[str] = mapped_column(Text, nullable=False)
-    google_email_enc: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
     access_token_enc: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
-    refresh_token_enc: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
     token_expires_at: Mapped[str] = mapped_column(Text, nullable=False)
     connected_at: Mapped[str] = mapped_column(Text, nullable=False)
     user_id: Mapped[int] = mapped_column(ForeignKey('app_user.user_id'), primary_key=True)
+    google_account_id: Mapped[Optional[str]] = mapped_column(Text)
+    google_email_enc: Mapped[Optional[bytes]] = mapped_column(LargeBinary)
+    refresh_token_enc: Mapped[Optional[bytes]] = mapped_column(LargeBinary)
+
+
+class ScheduleProcessing(Base):
+    __tablename__ = 'schedule_processing'
+
+    board_id: Mapped[str] = mapped_column(Text, primary_key=True)
+    notice_id: Mapped[str] = mapped_column(Text, primary_key=True)
+    status: Mapped[str] = mapped_column(Text, nullable=False)
+    event_count: Mapped[int] = mapped_column(Integer, nullable=False, server_default=text('0'))
+    processed_at: Mapped[str] = mapped_column(Text, nullable=False)
+    reason: Mapped[Optional[str]] = mapped_column(Text)
+    error: Mapped[Optional[str]] = mapped_column(Text)
 
 
 class InterestKeyword(Base):

@@ -96,10 +96,10 @@ CREATE TABLE user_interest (                                -- 사용자가 고�
 -- 11-14: Google 캘린더 연결 (캘린더 파트 5.2.2 GoogleCalendarConnection). token은 이메일과 같은 방식으로 암호화
 CREATE TABLE google_connection (
     user_id            INTEGER PRIMARY KEY REFERENCES app_user(user_id) ON DELETE CASCADE,
-    google_account_id  TEXT    NOT NULL UNIQUE,
-    google_email_enc   BLOB    NOT NULL,
+    google_account_id  TEXT    UNIQUE,                      -- calendar 권한만 받으면 Google이 주지 않을 수 있음
+    google_email_enc   BLOB,
     access_token_enc   BLOB    NOT NULL,
-    refresh_token_enc  BLOB    NOT NULL,
+    refresh_token_enc  BLOB,                                -- 재동의 때는 발급되지 않을 수 있어 NULL 허용 (있던 값 유지)
     token_expires_at   TEXT    NOT NULL,
     connected_at       TEXT    NOT NULL
 );
@@ -344,6 +344,17 @@ CREATE TABLE schedule_department (                          -- 일정–학과 N
     PRIMARY KEY (schedule_id, dept_id)
 );
 
+CREATE TABLE schedule_processing (                          -- 공지 한 건의 일정 추출 처리 결과 (캘린더 파트 3.2.7, 중복 전달 방지)
+    board_id      TEXT    NOT NULL,
+    notice_id     TEXT    NOT NULL,
+    status        TEXT    NOT NULL CHECK (status IN ('COMPLETED', 'EXCLUDED', 'FAILED')),
+    reason        TEXT,                                     -- LLM decisionReason
+    error         TEXT,
+    event_count   INTEGER NOT NULL DEFAULT 0,
+    processed_at  TEXT    NOT NULL,
+    PRIMARY KEY (board_id, notice_id)
+);
+
 CREATE TABLE calendar_export (                              -- Google 캘린더에 넣은 일정 (중복 등록 방지)
     user_id          INTEGER NOT NULL REFERENCES app_user(user_id) ON DELETE CASCADE,
     schedule_id      INTEGER NOT NULL REFERENCES schedule(schedule_id) ON DELETE CASCADE,
@@ -498,7 +509,7 @@ CREATE INDEX ix_posting_notice      ON notice_posting(notice_id);
 CREATE INDEX ix_tag_dept            ON notice_tag(dept_id);
 CREATE INDEX ix_crawl_run_board     ON crawl_run(board_id, started_at);
 CREATE INDEX ix_schedule_start      ON schedule(start_at);
-CREATE INDEX ix_schedule_notice     ON schedule(notice_id);
+CREATE INDEX ix_schedule_notice     ON schedule(board_id, notice_id);   -- 같은 공지에서 뽑은 일정
 CREATE INDEX ix_sched_dept_dept     ON schedule_department(dept_id);
 CREATE INDEX ix_notif_user          ON notification(user_id);
 CREATE INDEX ix_notif_retry         ON notification(status, attempt_count);  -- 재발송 대상

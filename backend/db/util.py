@@ -52,6 +52,18 @@ def decrypt_email(blob: bytes) -> str:
     return AESGCM(_secret()).decrypt(blob[:12], blob[12:], None).decode()
 
 
+def encrypt_text(value: str | None) -> bytes | None:
+    """토큰 등 원문 그대로 암호화 (이메일과 달리 소문자로 바꾸지 않음)."""
+    if value is None:
+        return None
+    nonce = os.urandom(12)
+    return nonce + AESGCM(_secret()).encrypt(nonce, value.encode(), None)
+
+
+def decrypt_text(blob: bytes | None) -> str | None:
+    return None if blob is None else AESGCM(_secret()).decrypt(blob[:12], blob[12:], None).decode()
+
+
 def to_dt(ts: str | None) -> datetime | None:
     """DB 시각 문자열 -> UTC datetime (로그인 코드처럼 datetime으로 비교하는 쪽에 줄 때)."""
     return None if ts is None else datetime.strptime(ts, TIME_FMT).replace(tzinfo=timezone.utc)
