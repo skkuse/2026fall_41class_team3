@@ -1,8 +1,11 @@
 """인증 코드 메일 발송. api를 import하지 않으므로 실패는 EmailSendError로 알리고, 상태 코드 변환은 라우트가 한다."""
+import logging
 import os
 import smtplib
 from email.message import EmailMessage
 
+from flask import current_app
+logger = logging.getLogger(__name__)
 
 class EmailSendError(Exception):
     pass
@@ -14,6 +17,10 @@ BODY = "인증 코드: {code}\n이 코드는 {minutes}분 동안 유효합니다
 
 
 def send_verification_email(email: str, code: str, ttl_sec: int) -> None:
+    if current_app.debug and not os.environ.get("SMTP_HOST"):
+        logger.warning("[DEV 메일 우회] to=%s code=%s (유효 %d초)", email, code, ttl_sec)
+        return
+
     msg = EmailMessage()
     msg["Subject"] = SUBJECT
     msg["From"] = os.environ["SMTP_FROM"]
