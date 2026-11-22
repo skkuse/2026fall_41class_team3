@@ -50,3 +50,17 @@ def encrypt_email(email: str) -> bytes:
 
 def decrypt_email(blob: bytes) -> str:
     return AESGCM(_secret()).decrypt(blob[:12], blob[12:], None).decode()
+
+
+def to_dt(ts: str | None) -> datetime | None:
+    """DB 시각 문자열 -> UTC datetime (로그인 코드처럼 datetime으로 비교하는 쪽에 줄 때)."""
+    return None if ts is None else datetime.strptime(ts, TIME_FMT).replace(tzinfo=timezone.utc)
+
+
+def from_dt(dt: datetime | None) -> str | None:
+    """datetime -> DB 시각 문자열. tzinfo가 없으면 UTC로 본다."""
+    if dt is None:
+        return None
+    if dt.tzinfo is not None:
+        dt = dt.astimezone(timezone.utc)
+    return dt.strftime(TIME_FMT)

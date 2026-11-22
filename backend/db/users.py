@@ -3,11 +3,12 @@
 다른 파트가 요청한 함수: get_user_scope, list_departments, list_keyword_subscribers (공지·알림 파트),
 키워드 CRUD (공지·알림 파트 5절). 사용자 식별자는 서버 세션에서 꺼내 넘긴다 (LLM 인자로 받지 않음).
 """
-from sqlalchemy import delete, func, insert, select
+from sqlalchemy import delete, func, insert, or_, select
 from sqlalchemy.exc import IntegrityError
 
 from .engine import session_scope
-from .models import AppUser, Board, Department, Faculty, InterestKeyword, t_user_board
+from .models import (AppUser, Board, Department, Faculty, Interest, InterestKeyword, UserInterest,
+                     t_user_board)
 from .util import decrypt_email, normalize_keyword, now
 
 
@@ -130,13 +131,15 @@ def set_user_boards(user_id: int, board_ids: list[int]) -> list[int]:
 def list_keyword_subscribers(board_id: int | None = None) -> list[dict]:
     """알림 배치용. 키워드가 1개 이상인 인증 사용자와 키워드 목록.
 
+    키워드 = 직접 입력한 키워드 + 온보딩에서 고른 관심사의 이름 (11-22 결정, keyword_norm 기준 중복 제거).
     board_id를 주면 그 게시판을 관심 게시판으로 등록한 사용자만. 이메일은 복호화해서 준다.
     """
     with session_scope() as s:
         q = (select(AppUser, Department.name, Faculty.name)
              .outerjoin(Department, AppUser.dept_id == Department.dept_id)
              .outerjoin(Faculty, Department.faculty_id == Faculty.faculty_id)
-             .where(AppUser.user_id.in_(select(InterestKeyword.user_id))))
+             .where(or_(AppUser.user_id.in_(select(InterestKeyword.user_id)),
+                        AppUser.user_id.in_(select(UserInterest.user_id)))))
         if board_id is not None:
             q = q.where(AppUser.user_id.in_(
                 select(t_user_board.c.user_id).where(t_user_board.c.board_id == board_id)))
@@ -145,7 +148,14 @@ def list_keyword_subscribers(board_id: int | None = None) -> list[dict]:
         kws: dict[int, list] = {i: [] for i in ids}
         for k in s.scalars(select(InterestKeyword).where(InterestKeyword.user_id.in_(ids))):
             kws[k.user_id].append({"keyword_norm": k.keyword_norm, "keyword": k.keyword,
-                                   "created_at": k.created_at})
+                                   "created_at": k.created_at, "source": "KEYWORD"})
+        for ui, name in s.execute(select(UserInterest, Interest.name)
+                                  .join(Interest, UserInterest.interest_id == Interest.interest_id)
+                                  .where(UserInterest.user_id.in_(ids))):
+            norm = normalize_keyword(name)
+            if all(k["keyword_norm"] != norm for k in kws[ui.user_id]):
+                kws[ui.user_id].append({"keyword_norm": norm, "keyword": name,
+                                        "created_at": ui.created_at, "source": "INTEREST"})
         return [{"user_id": u.user_id, "email": decrypt_email(u.email_enc), "dept_id": u.dept_id,
                  "dept_name": dname, "college_name": fname, "keywords": kws[u.user_id]}
                 for u, dname, fname in users]

@@ -10,7 +10,10 @@ from pathlib import Path
 
 from sqlalchemy import create_engine, event
 from sqlalchemy.engine import Engine
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session, sessionmaker
+
+from .errors import DbError
 
 SCHEMA_PATH = Path(__file__).with_name("schema.sql")
 
@@ -79,6 +82,9 @@ def session_scope(engine: Engine | None = None):
     try:
         yield s
         s.commit()
+    except OperationalError as e:       # 잠금 시간 초과 등 일시 오류 -> DbError (API는 503)
+        s.rollback()
+        raise DbError(str(e.orig)) from e
     except Exception:
         s.rollback()
         raise

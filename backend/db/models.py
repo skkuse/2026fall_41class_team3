@@ -20,17 +20,18 @@ class ChunkTombstone(Base):
     chunk_id: Mapped[int] = mapped_column(Integer, primary_key=True)
 
 
-class EmailToken(Base):
-    __tablename__ = 'email_token'
+class EmailCode(Base):
+    __tablename__ = 'email_code'
 
     email_hash: Mapped[str] = mapped_column(Text, nullable=False)
-    token_hash: Mapped[str] = mapped_column(Text, nullable=False)
-    issued_at: Mapped[str] = mapped_column(Text, nullable=False)
+    code_hash: Mapped[str] = mapped_column(Text, nullable=False)
+    sent_at: Mapped[str] = mapped_column(Text, nullable=False)
     expires_at: Mapped[str] = mapped_column(Text, nullable=False)
-    send_status: Mapped[str] = mapped_column(Text, nullable=False, server_default=text("'pending'"))
-    token_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    attempts: Mapped[int] = mapped_column(Integer, nullable=False, server_default=text('0'))
+    send_count: Mapped[int] = mapped_column(Integer, nullable=False)
+    window_started_at: Mapped[str] = mapped_column(Text, nullable=False)
+    code_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     used_at: Mapped[Optional[str]] = mapped_column(Text)
-    revoked_at: Mapped[Optional[str]] = mapped_column(Text)
 
 
 class EvalSet(Base):
@@ -406,6 +407,24 @@ class InterestKeyword(Base):
     keyword_id: Mapped[int] = mapped_column(Integer, primary_key=True)
 
     user: Mapped['AppUser'] = relationship('AppUser', back_populates='interest_keyword')
+
+
+class Interest(Base):
+    __tablename__ = 'interest'
+
+    name: Mapped[str] = mapped_column(Text, nullable=False)
+    sort_order: Mapped[int] = mapped_column(Integer, nullable=False, server_default=text('0'))
+    interest_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+
+
+class UserInterest(Base):
+    __tablename__ = 'user_interest'
+
+    user_id: Mapped[int] = mapped_column(ForeignKey('app_user.user_id'), primary_key=True)
+    interest_id: Mapped[int] = mapped_column(ForeignKey('interest.interest_id'), primary_key=True)
+    created_at: Mapped[str] = mapped_column(Text, nullable=False)
+
+    interest: Mapped['Interest'] = relationship('Interest')
 
 
 class LikePlace(Base):

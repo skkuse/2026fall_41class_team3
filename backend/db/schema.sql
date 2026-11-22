@@ -41,20 +41,19 @@ CREATE TABLE app_user (
     deletion_notified_at TEXT                               -- 12개월 미접속 통지 시각
 );
 
-CREATE TABLE email_token (
-    token_id     INTEGER PRIMARY KEY,
-    email_hash   TEXT    NOT NULL,                          -- 사용자 레코드가 없을 수 있어 FK 대신 식별값
-    token_hash   TEXT    NOT NULL UNIQUE,                   -- SHA-256(토큰), 원문은 저장하지 않음
-    issued_at    TEXT    NOT NULL,
-    expires_at   TEXT    NOT NULL,                          -- 발급 후 3분 (3.6.3)
-    used_at      TEXT,
-    revoked_at   TEXT,                                      -- 재발급 시 이전 토큰 무효화
-    send_status  TEXT    NOT NULL DEFAULT 'pending'
-                 CHECK (send_status IN ('pending', 'sent', 'failed'))
+CREATE TABLE email_code (                                   -- 로그인 인증 코드 (로그인 파트 11/16 코드에 맞춤)
+    code_id            INTEGER PRIMARY KEY,
+    email_hash         TEXT    NOT NULL,                    -- 사용자 레코드가 없을 수 있어 FK 대신 식별값
+    code_hash          TEXT    NOT NULL,                    -- HMAC(SECRET_KEY, "email:code"), 원문은 저장하지 않음
+    sent_at            TEXT    NOT NULL,
+    expires_at         TEXT    NOT NULL,                    -- 발송 후 10분 (11-22 결정, SRS 3.6.3의 3분에서 변경)
+    used_at            TEXT,
+    attempts           INTEGER NOT NULL DEFAULT 0,          -- 이 코드로 틀린 횟수
+    send_count         INTEGER NOT NULL,                    -- 발송 제한 구간 안에서 몇 번째 발송인지
+    window_started_at  TEXT    NOT NULL                     -- 발송 제한 구간 시작 시각
 );
--- 한 이메일에 유효한(미사용·미무효) 토큰은 하나만
-CREATE UNIQUE INDEX ux_email_token_active
-    ON email_token(email_hash) WHERE used_at IS NULL AND revoked_at IS NULL;
+-- 발송할 때마다 새 행을 추가하고, 조회는 이메일의 가장 최근 행만 본다 (이전 코드는 자동으로 무효).
+-- 오래된 행은 보존 기간 정리 batch가 지운다.
 
 CREATE TABLE session (
     session_id  TEXT    PRIMARY KEY,                        -- UUIDv4, 쿠키 값
@@ -79,6 +78,19 @@ CREATE TABLE interest_keyword (
     keyword_norm  TEXT    NOT NULL CHECK (length(keyword_norm) BETWEEN 1 AND 30),  -- 비교용 (공지·알림 파트 요청)
     created_at    TEXT    NOT NULL,
     UNIQUE (user_id, keyword_norm)
+);
+
+CREATE TABLE interest (                                     -- 온보딩에서 고르는 관심사 목록 (GET /api/interests)
+    interest_id  INTEGER PRIMARY KEY,
+    name         TEXT    NOT NULL UNIQUE CHECK (length(name) BETWEEN 1 AND 30),
+    sort_order   INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE user_interest (                                -- 사용자가 고른 관심사. 이름은 알림 키워드로도 쓴다 (11-22 결정)
+    user_id      INTEGER NOT NULL REFERENCES app_user(user_id) ON DELETE CASCADE,
+    interest_id  INTEGER NOT NULL REFERENCES interest(interest_id) ON DELETE CASCADE,
+    created_at   TEXT    NOT NULL,
+    PRIMARY KEY (user_id, interest_id)
 );
 
 -- 11-14: Google 캘린더 연결 (캘린더 파트 5.2.2 GoogleCalendarConnection). token은 이메일과 같은 방식으로 암호화
@@ -474,7 +486,7 @@ CREATE TABLE eval_run (
 CREATE INDEX ix_session_user        ON session(user_id);
 CREATE INDEX ix_message_created     ON message(created_at);           -- 30일 보존 삭제
 CREATE INDEX ix_user_last_access    ON app_user(last_access_at);      -- 12개월 미접속 통지
-CREATE INDEX ix_email_token_expires ON email_token(expires_at);
+CREATE INDEX ix_email_code_latest  ON email_code(email_hash, code_id DESC);  -- 이메일의 최신 코드
 CREATE INDEX ix_memory_user         ON user_memory(user_id);
 CREATE INDEX ix_tool_call_message   ON tool_call(message_id);
 CREATE INDEX ix_retrieval_message   ON retrieval(message_id);
