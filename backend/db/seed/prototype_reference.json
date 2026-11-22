@@ -75,433 +75,547 @@
    "dept_id": 1,
    "faculty_id": 1,
    "name": "인문과학계열",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 2,
    "faculty_id": 1,
    "name": "사회과학계열",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 3,
    "faculty_id": 1,
    "name": "자연과학계열",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 4,
    "faculty_id": 1,
    "name": "공학계열",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 5,
    "faculty_id": 1,
    "name": "자유전공계열",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 6,
    "faculty_id": 2,
    "name": "유학동양학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 7,
    "faculty_id": 3,
    "name": "국어국문학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 8,
    "faculty_id": 3,
    "name": "영어영문학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 9,
    "faculty_id": 3,
    "name": "프랑스어문학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 10,
    "faculty_id": 3,
    "name": "중어중문학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 11,
    "faculty_id": 3,
    "name": "독어독문학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 12,
    "faculty_id": 3,
    "name": "러시아어문학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 13,
    "faculty_id": 3,
    "name": "한문학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 14,
    "faculty_id": 3,
    "name": "사학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 15,
    "faculty_id": 3,
    "name": "철학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 16,
    "faculty_id": 3,
    "name": "문헌정보학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 17,
    "faculty_id": 4,
    "name": "행정학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 18,
    "faculty_id": 4,
    "name": "정치외교학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 19,
    "faculty_id": 4,
    "name": "미디어커뮤니케이션학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 20,
    "faculty_id": 4,
    "name": "사회학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 21,
    "faculty_id": 4,
    "name": "사회복지학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 22,
    "faculty_id": 4,
    "name": "심리학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 23,
    "faculty_id": 4,
    "name": "소비자학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 24,
    "faculty_id": 4,
    "name": "아동·청소년학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 25,
    "faculty_id": 4,
    "name": "글로벌리더학부",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 26,
    "faculty_id": 4,
    "name": "휴먼사이언스·사회융합전공",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 27,
    "faculty_id": 5,
    "name": "경제학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 28,
    "faculty_id": 5,
    "name": "통계학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 29,
    "faculty_id": 5,
    "name": "글로벌경제학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 30,
    "faculty_id": 6,
    "name": "경영학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 31,
    "faculty_id": 6,
    "name": "글로벌경영학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 32,
    "faculty_id": 7,
    "name": "교육학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 33,
    "faculty_id": 7,
    "name": "한문교육과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 34,
    "faculty_id": 7,
    "name": "수학교육과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 35,
    "faculty_id": 7,
    "name": "컴퓨터교육과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 36,
    "faculty_id": 8,
    "name": "미술학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 37,
    "faculty_id": 8,
    "name": "디자인학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 38,
    "faculty_id": 8,
    "name": "무용학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 39,
    "faculty_id": 8,
    "name": "영상학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 40,
    "faculty_id": 8,
    "name": "연기예술학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 41,
    "faculty_id": 8,
    "name": "의상학과",
-   "campus": "인문사회"
+   "campus": "인문사회",
+   "is_selectable": 1
   },
   {
    "dept_id": 42,
    "faculty_id": 9,
    "name": "생명과학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 43,
    "faculty_id": 9,
    "name": "수학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 44,
    "faculty_id": 9,
    "name": "물리학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 45,
    "faculty_id": 9,
    "name": "화학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 46,
    "faculty_id": 10,
    "name": "전자전기공학부",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 47,
    "faculty_id": 10,
    "name": "반도체시스템공학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 48,
    "faculty_id": 10,
    "name": "소재부품융합공학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 49,
    "faculty_id": 10,
    "name": "반도체융합공학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 50,
    "faculty_id": 11,
    "name": "소프트웨어학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 51,
    "faculty_id": 11,
    "name": "글로벌융합학부",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 0
   },
   {
    "dept_id": 52,
    "faculty_id": 11,
    "name": "지능형소프트웨어학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 53,
    "faculty_id": 11,
    "name": "인공지능학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 54,
    "faculty_id": 12,
    "name": "화학공학부",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 55,
    "faculty_id": 12,
    "name": "신소재공학부",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 56,
    "faculty_id": 12,
    "name": "기계공학부",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 57,
    "faculty_id": 12,
    "name": "건설환경공학부",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 58,
    "faculty_id": 12,
    "name": "시스템경영공학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 59,
    "faculty_id": 12,
    "name": "건축학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 60,
    "faculty_id": 12,
    "name": "나노공학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 61,
    "faculty_id": 12,
    "name": "양자정보공학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 62,
    "faculty_id": 13,
    "name": "약학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 63,
    "faculty_id": 13,
    "name": "바이오신약·규제과학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 64,
    "faculty_id": 14,
    "name": "식품생명공학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 65,
    "faculty_id": 14,
    "name": "바이오메카트로닉스학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 66,
    "faculty_id": 14,
    "name": "융합생명공학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 67,
    "faculty_id": 15,
    "name": "스포츠과학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 68,
    "faculty_id": 16,
    "name": "의학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 69,
    "faculty_id": 17,
    "name": "글로벌바이오메디컬공학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 70,
    "faculty_id": 17,
    "name": "응용AI융합학부",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 0
   },
   {
    "dept_id": 71,
    "faculty_id": 17,
    "name": "에너지학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
   },
   {
    "dept_id": 72,
    "faculty_id": 17,
    "name": "배터리학과",
-   "campus": "자연과학"
+   "campus": "자연과학",
+   "is_selectable": 1
+  },
+  {
+   "dept_id": 73,
+   "faculty_id": 11,
+   "name": "데이터사이언스융합전공",
+   "campus": "자연과학",
+   "is_selectable": 1
+  },
+  {
+   "dept_id": 74,
+   "faculty_id": 11,
+   "name": "인공지능융합전공",
+   "campus": "자연과학",
+   "is_selectable": 1
+  },
+  {
+   "dept_id": 75,
+   "faculty_id": 11,
+   "name": "컬처앤테크놀로지융합전공",
+   "campus": "자연과학",
+   "is_selectable": 1
+  },
+  {
+   "dept_id": 76,
+   "faculty_id": 11,
+   "name": "자기설계 융합전공",
+   "campus": "자연과학",
+   "is_selectable": 1
+  },
+  {
+   "dept_id": 77,
+   "faculty_id": 17,
+   "name": "AI융합운영전공",
+   "campus": "자연과학",
+   "is_selectable": 1
+  },
+  {
+   "dept_id": 78,
+   "faculty_id": 17,
+   "name": "산업인공지능전공",
+   "campus": "자연과학",
+   "is_selectable": 1
   }
  ],
  "boards": [
@@ -1218,7 +1332,7 @@
    "name": "데이터사이언스융합전공 공지",
    "scope": "DEPT",
    "faculty_id": null,
-   "dept_id": 51,
+   "dept_id": 73,
    "list_url": "https://sco.skku.edu/sco/community/major_data.do",
    "allowed_host": "sco.skku.edu",
    "parser_type": "TBD",
@@ -1230,7 +1344,7 @@
    "name": "인공지능융합전공 공지",
    "scope": "DEPT",
    "faculty_id": null,
-   "dept_id": 51,
+   "dept_id": 74,
    "list_url": "https://sco.skku.edu/sco/community/major_info.do",
    "allowed_host": "sco.skku.edu",
    "parser_type": "TBD",
@@ -1242,7 +1356,7 @@
    "name": "컬처앤테크놀로지융합전공 공지",
    "scope": "DEPT",
    "faculty_id": null,
-   "dept_id": 51,
+   "dept_id": 75,
    "list_url": "https://sco.skku.edu/sco/community/major_culture.do",
    "allowed_host": "sco.skku.edu",
    "parser_type": "TBD",
@@ -1254,7 +1368,7 @@
    "name": "자기설계 융합전공 공지",
    "scope": "DEPT",
    "faculty_id": null,
-   "dept_id": 51,
+   "dept_id": 76,
    "list_url": "https://sco.skku.edu/sco/community/major_magnetic.do",
    "allowed_host": "sco.skku.edu",
    "parser_type": "TBD",
@@ -1566,7 +1680,7 @@
    "name": "AI융합운영전공 공지",
    "scope": "DEPT",
    "faculty_id": null,
-   "dept_id": 70,
+   "dept_id": 77,
    "list_url": "https://aicon.skku.edu/aicon/notice.do",
    "allowed_host": "aicon.skku.edu",
    "parser_type": "TBD",

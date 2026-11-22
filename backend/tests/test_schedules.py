@@ -28,7 +28,7 @@ def ev(start, end=None, title=None, notice="100", **kw):
 
 def test_faculties_grouped():
     fs = sc.get_all_faculties_with_departments()
-    assert len(fs) == 17 and sum(len(f["departments"]) for f in fs) == 72
+    assert len(fs) == 17 and sum(len(f["departments"]) for f in fs) == 78
     assert set(fs[0]) == {"id", "name", "departments"}
 
 

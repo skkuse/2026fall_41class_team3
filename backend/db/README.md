@@ -19,6 +19,8 @@ init_db(get_engine())        # 빈 DB면 schema.sql 실행, 이미 있으면 그
 python -m backend.db.seed_data   # 단과대학·학과·게시판·관심사 넣기 (프로토타입, 이미 있으면 건너뜀)
 ```
 
+- 소속 ID 목록은 `seed/department_ids.md`. 전공은 학과로 따로 있고(73~78), 전공으로 나뉘는 학부(글로벌융합학부 51, 응용AI융합학부 70)는 `is_selectable = 0`이라 선택 목록에서만 빠진다 (행은 유지).
+- `seed_data`는 같은 id끼리 맞춘다(추가·갱신만, 삭제 없음). seed가 바뀌면 다시 돌리면 된다. 단 테이블 열이 바뀐 경우(예: 11-22 `department.is_selectable`)는 개발용 DB 파일을 지우고 새로 만든다.
 - 참조 데이터는 `seed/prototype_reference.json`이다. 이서영 님 `공지사항 주소.xlsx`(11/17)에서 만든 **프로토타입**이라 캠퍼스는 추정값이고 `parser_type`은 `TBD`다. 크롤링해 본 뒤 공지·알림 파트와 확정한다. 학과 id는 이 파일이 정하고 FE 드롭다운도 같은 id를 쓴다.
 - 로그인 파트 코드(`backend/api`)는 `backend/`를 기준으로 `db.user`처럼 import한다. 서버는 `backend/`에서 실행하거나 `backend/`를 `PYTHONPATH`에 넣는다.
 

@@ -23,14 +23,17 @@ def seeded(tmp_path):
     engine = make_engine(str(tmp_path / "t.db"))
     init_db(engine)
     configure(engine)
-    assert seed_data.load_reference() is True
-    assert seed_data.load_reference() is False          # 두 번째는 건너뜀
+    assert seed_data.load_reference()["department"] == (78, 0)
+    assert seed_data.load_reference()["department"] == (0, 0)     # 다시 돌려도 바뀌는 것 없음
     return engine
 
 
 def test_seed_prototype(seeded):
     depts = profile.list_departments()
-    assert len(depts) == 72 and {"id", "name"} == set(depts[0])
+    names = {d["name"] for d in depts}
+    assert len(depts) == 76 and {"id", "name"} == set(depts[0])            # 78 - 전공으로 나뉜 학부 2
+    assert "글로벌융합학부" not in names and {"인공지능융합전공", "산업인공지능전공"} <= names
+    assert profile.department_exists(51)                                     # 행은 남아 있음
     assert profile.get_department_name(next(d["id"] for d in depts if d["name"] == "소프트웨어학과")) == "소프트웨어학과"
     assert [i["name"] for i in profile.list_interests()][:2] == ["장학", "취업"]
 
@@ -117,3 +120,17 @@ def test_login_routes_end_to_end(tmp_path, monkeypatch):
     assert c.put("/api/me/profile", json={"department_id": 9999}).status_code == 422
     assert c.post("/api/auth/logout").status_code == 204
     assert c.get("/api/me").get_json()["user"] is None
+
+
+def test_seed_resync_keeps_ids(seeded, tmp_path):
+    """seed 파일이 바뀌면 같은 id 행을 고치고, 크롤링 현황 열은 그대로 둔다."""
+    import json
+    from backend.db import notices
+    notices.finish_crawl_run(notices.start_crawl_run(60, "2026-11-22T00:00:00Z"), "SUCCESS", last_article_no=55)
+    data = json.loads(seed_data.PROTOTYPE.read_text(encoding="utf-8"))
+    data["boards"][59]["list_url"] = "https://changed"
+    f = tmp_path / "ref.json"
+    f.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+    assert seed_data.load_reference(f)["board"] == (0, 1)
+    b = [x for x in notices.list_active_boards() if x["board_id"] == 60][0]
+    assert (b["list_url"], b["last_article_no"], b["dept_id"]) == ("https://changed", 55, 73)

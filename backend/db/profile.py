@@ -12,9 +12,11 @@ from .util import now
 
 
 def list_departments() -> list[dict]:
+    """선택 가능한 학과만 (전공으로 나뉘는 학부는 빠지고 그 전공들이 들어감). 학부대학 순서대로."""
     with session_scope() as s:
         return [{"id": d.dept_id, "name": d.name}
-                for d in s.scalars(select(Department).order_by(Department.faculty_id, Department.dept_id))]
+                for d in s.scalars(select(Department).where(Department.is_selectable == 1)
+                                   .order_by(Department.faculty_id, Department.dept_id))]
 
 
 def list_interests() -> list[dict]:

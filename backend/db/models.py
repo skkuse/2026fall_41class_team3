@@ -117,6 +117,7 @@ class Department(Base):
     faculty_id: Mapped[int] = mapped_column(ForeignKey('faculty.faculty_id'), nullable=False)
     name: Mapped[str] = mapped_column(Text, nullable=False)
     campus: Mapped[str] = mapped_column(Text, nullable=False)
+    is_selectable: Mapped[int] = mapped_column(Integer, nullable=False, server_default=text('1'))
     dept_id: Mapped[int] = mapped_column(Integer, primary_key=True)
 
     faculty: Mapped['Faculty'] = relationship('Faculty', back_populates='department')

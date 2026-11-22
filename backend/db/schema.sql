@@ -18,7 +18,8 @@ CREATE TABLE department (
     dept_id     INTEGER PRIMARY KEY,
     faculty_id  INTEGER NOT NULL REFERENCES faculty(faculty_id),
     name        TEXT    NOT NULL UNIQUE,                    -- 표준 표기 (필터 값)
-    campus      TEXT    NOT NULL CHECK (campus IN ('인문사회', '자연과학'))
+    campus      TEXT    NOT NULL CHECK (campus IN ('인문사회', '자연과학')),
+    is_selectable INTEGER NOT NULL DEFAULT 1 CHECK (is_selectable IN (0, 1))  -- 0 = 전공으로 나뉘는 학부 (선택 목록에서 제외, 행은 유지)
 );
 
 CREATE TABLE department_alias (
