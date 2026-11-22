@@ -498,6 +498,8 @@ class Session(Base):
     user_id: Mapped[Optional[int]] = mapped_column(ForeignKey('app_user.user_id'))
     title: Mapped[Optional[str]] = mapped_column(Text)
     expired_at: Mapped[Optional[str]] = mapped_column(Text)
+    summary: Mapped[Optional[str]] = mapped_column(Text)
+    summary_upto_seq: Mapped[int] = mapped_column(Integer, nullable=False, server_default=text('0'))
 
     user: Mapped[Optional['AppUser']] = relationship('AppUser', back_populates='session')
     message: Mapped[list['Message']] = relationship('Message', back_populates='session')

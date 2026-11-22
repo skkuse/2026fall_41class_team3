@@ -61,7 +61,9 @@ CREATE TABLE session (
     title       TEXT,
     created_at  TEXT    NOT NULL,
     updated_at  TEXT    NOT NULL,
-    expired_at  TEXT
+    expired_at  TEXT,
+    summary           TEXT,                                 -- 앞부분 대화 요약 (agent 문맥 압축용)
+    summary_upto_seq  INTEGER NOT NULL DEFAULT 0            -- 요약에 포함된 마지막 message.seq
 );
 -- 이미 다른 사용자에게 연결된 세션은 다시 연결할 수 없다
 CREATE TRIGGER tr_session_no_relink
@@ -494,7 +496,7 @@ CREATE TABLE eval_run (
 ------------------------------------------------------------
 -- 조회용 인덱스 (7.6)
 ------------------------------------------------------------
-CREATE INDEX ix_session_user        ON session(user_id);
+CREATE INDEX ix_session_user        ON session(user_id, updated_at);   -- 사이드바 대화 목록
 CREATE INDEX ix_message_created     ON message(created_at);           -- 30일 보존 삭제
 CREATE INDEX ix_user_last_access    ON app_user(last_access_at);      -- 12개월 미접속 통지
 CREATE INDEX ix_email_code_latest  ON email_code(email_hash, code_id DESC);  -- 이메일의 최신 코드

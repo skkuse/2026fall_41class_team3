@@ -68,4 +68,22 @@ python -m backend.db.seed_data   # 단과대학·학과·게시판·관심사 �
 - 처리 결과는 새 테이블 `schedule_processing` (COMPLETED/EXCLUDED/FAILED). OAuth state와 보류 중인 등록 대상은 Flask 세션에 두는 것을 제안.
 - 확인할 것: `createdAt`/`updatedAt`은 11/18 요청으로 열을 지워 지금 null로 나감 / `kind`는 LLM 출력에 없어 기본값 '학과 행사' / 이미지는 지금 한 장(`image_path`)이라 `image_urls`는 0~1개 / `schedule.board_id`가 우리 `board.board_id`(정수)와 같은 것인지.
 
-아직 없음: 대화 목록(이전 대화) API용 함수, Agent 검색 `search()`, 보존 기간 정리 batch(오래된 `email_code` 행 포함). `users.list_departments`와 `profile.list_departments`는 반환 형식이 달라 둘 다 두었다 (나중에 정리).
+나머지 초안 (11-22, 파트 담당이 돌려볼 수 있게 임의로 구현. 쓰면서 피드백 주시면 고침):
+
+| 모듈 | 함수 | 쓰는 파트 |
+|---|---|---|
+| `conversations` | `create_conversation`, `get_conversation`, `list_conversations`(사이드바), `rename_conversation`, `delete_conversation`, `claim_conversation`(익명 대화 승계) | 채팅 API |
+| `conversations` | `add_message`, `list_messages`, `recall_conversation`(agent tool), `save_summary` | 채팅 API, agent |
+| `conversations` | `log_tool_call`, `log_retrieval`, `list_memories`, `add_memory`, `update_memory`, `delete_memory` | agent |
+| `search` | `search(query, filters, k, vector_search=None)`, `get_chunks`, `chroma_where` | agent (학교정보·규정) |
+| `search` | `rebuild_pending`, `rebuild_chunks`, `chunks_for_indexing`, `pending_tombstones`, `clear_tombstones`, `create_index_config`, `activate_index`, `get_active_index` | 색인(Chroma) 담당 |
+| `regulations` | `upsert_regulation`, `add_regulation_version`, `list_regulations`, `get_article`, `get_annex`, `get_addenda` | 규정 수집, 규정 agent |
+| `retention` | `run_all`, `purge_conversations`, `purge_email_codes`, `users_to_warn`, `mark_warned`, `delete_warned_users` | batch (`python -m backend.db.retention`) |
+| `evaluation` | `create_eval_set`, `list_eval_questions`, `hit_at_k`, `mrr`, `record_eval_run`, `list_eval_runs` | 규정 agent 평가 |
+
+- 대화: 테이블 `session`이 대화 하나다 (로그인 세션 쿠키와 별개). 익명 대화는 `user_id` 없이 만들고 로그인하면 `claim_conversation`. 첫 user 메시지 앞 30자가 제목. `session`에 `summary`, `summary_upto_seq` 열 추가.
+- 검색: Chroma·BGE-M3 없이도 돌도록 기본은 SQLite 키워드 검색(검색어 단어가 제목·본문에 들어간 비율). `vector_search(query, where, k) -> [(chunk_id, score)]`를 넘기면 벡터 검색 결과에 본문·출처를 채워 준다. 청킹은 임시 규칙 `para-v1`(문단 묶음 800자). 공지가 수정되면 청크를 지우고 tombstone을 남긴다 -> `rebuild_pending`이 다시 만든다.
+- 규정: 새 버전을 넣으면 이전 버전을 닫고 검색 문서를 새 조문으로 바꾼다. `on_date`로 그날 시행 중이던 조문 조회.
+- 보존: 대화 30일, 익명 대화 1일(SRS '세션 종료 시'의 근사), 인증 코드 1일, 12개월 미접속 예고 -> 30일 뒤 삭제. 예고 메일 발송은 알림 파트.
+
+정리할 것: `users.list_departments`와 `profile.list_departments`는 반환 형식이 달라 둘 다 두었다.

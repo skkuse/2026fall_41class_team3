@@ -11,6 +11,7 @@ from sqlalchemy import func, or_, select
 
 from .engine import session_scope
 from .models import Board, CrawlRun, Department, Document, Notice, NoticePosting, NoticeTag
+from .search import invalidate_chunks
 from .util import now, shift
 
 # ---------- 게시판·실행 관리 ----------
@@ -98,13 +99,15 @@ def _posting(post: dict, board_id: int, t: str) -> NoticePosting:
                          first_seen_at=t, last_seen_at=t)
 
 
-def _sync_document(s, notice: Notice) -> None:
-    """검색 대상 문서를 공지와 맞춘다 (청크·임베딩은 색인 파이프라인이 doc 단위로 다시 만든다)."""
+def _sync_document(s, notice: Notice, content_changed: bool = False) -> None:
+    """검색 대상 문서를 공지와 맞춘다. 내용이 바뀌었으면 청크를 지워 search.rebuild_pending이 다시 만들게 한다."""
     doc = s.scalar(select(Document).where(Document.source_table == "notice", Document.source_id == notice.notice_id))
     if doc is None:
         doc = Document(doc_type="공지사항", source_table="notice", source_id=notice.notice_id,
                        trust_level="공식 공지", collected_at=notice.collected_at)
         s.add(doc)
+    elif content_changed:
+        invalidate_chunks(s, doc.doc_id)
     depts = [t.dept_id for t in notice.notice_tag if t.scope == "DEPT"]
     doc.title, doc.source_url, doc.published_at = notice.title, notice.url, notice.posted_at
     doc.dept_id = depts[0] if len(depts) == 1 else None
@@ -159,7 +162,7 @@ def add_notice_posting(notice_id: int, post: dict, board_id: int, overwrite: boo
             n.tags_changed_at = t
         n.last_checked_at = t
         s.flush()
-        _sync_document(s, n)
+        _sync_document(s, n, content_changed=overwrite)
         return {"posting_id": p.posting_id, "tags_changed": changed}
 
 
@@ -172,7 +175,7 @@ def update_notice_content(notice_id: int, posting_id: int, post: dict) -> None:
         n.content_updated_at = n.last_checked_at = t
         p = s.get(NoticePosting, posting_id)
         p.content_hash, p.last_seen_at = post["content_hash"], t
-        _sync_document(s, n)
+        _sync_document(s, n, content_changed=True)
 
 
 def touch_posting(posting_id: int, seen_at: str | None = None) -> None:
