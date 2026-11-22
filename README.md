@@ -34,3 +34,60 @@
 ├── docs/                  # 디자인 명세서, 공통 합의서, API 명세, 로그인 설계
 ├── .gitignore
 └── README.md
+
+## 실행 방법
+처음 한 번은 아래 순서로 준비하고, 이후에는 백엔드와 프론트엔드를 각각 실행한다.
+
+### 사전 준비
+- Python 3.11 이상, Node.js 20 이상
+
+### 백엔드 (Flask)
+**1. `backend/` 에서 가상환경 만들고 패키지 설치**
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+**2. 환경변수 설정** (`backend/` 에서)
+```bash
+cp .env.example .env             # .env 구조를 .env에 복사 (값 설정은 로컬에서 직접)
+```
+| 변수 | 설명 |
+|---|---|
+| `SECRET_KEY` | 세션 쿠키 서명과 인증 코드 해시용. `python -c "import secrets; print(secrets.token_hex(32))"` 로 생성 |
+| `DB_SECRET_KEY` | 이메일 암호화용. `python -c "import os,base64;print(base64.b64encode(os.urandom(32)).decode())"` 로 생성. 한 번 정하면 바꾸지 않는다 |
+| `DB_PATH` | DB 파일 위치. `../data/app.db` |
+| `COOKIE_SECURE` | 로컬 http 개발은 `0` |
+| `SMTP_*` | 인증 메일 발송 설정 (메일을 실제로 보낼 때만 필요) |
+
+**3. DB 초기 데이터 넣기** (저장소 **루트**에서, 처음 한 번만)
+```bash
+python -m backend.db.seed_data
+```
+학과, 관심사 등 기본 데이터를 DB에 넣는다. 이미 있으면 건너뛰므로 여러 번 실행해도 된다. 
+테이블은 서버를 띄울 때 자동으로 만들어진다.
+
+**4. 서버 실행** (`backend/` 에서, 가상환경을 켠 상태)
+```bash
+flask --app app run --debug --port 5000
+```
+
+**5. 테스트** (`backend/` 에서)
+```bash
+pytest tests/test_login_db.py
+```
+
+### 프론트엔드 (React + Vite)
+
+```bash
+cd frontend
+npm install
+npm run dev                      # 기본 주소 http://localhost:5173
+```
+
+### 참고
+- 백엔드는 항상 `backend/` 에서 실행한다. 시드 명령만 저장소 루트에서 실행한다.
+- `.env`, `data/`(DB 파일)는 git에 올리지 않는다.
+- 에이전트(`agent/`)는 아직 임시 스텁이라 채팅 응답은 고정 문구가 나온다.

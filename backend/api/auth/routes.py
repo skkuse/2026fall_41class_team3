@@ -49,7 +49,7 @@ def post_email_code():
 
     code = make_code()
     now = utcnow()
-    # 이메일당 행 하나: 재발송하면 같은 행을 덮어쓰고 attempts, used_at을 초기화
+    # 이메일당 행 하나: 재발송하면 새 행을 추가하고 최신 행만 참고
     upsert_code(email, hash_code(email, code),
                 now + timedelta(seconds=cfg.CODE_TTL_SEC), now,
                 send_count, window_started_at)
