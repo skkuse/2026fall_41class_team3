@@ -34,6 +34,7 @@ faiss_index/
 *.faiss
 *.pkl
 .cache/
+data/
 
 # ===== 에디터 / OS =====
 .vscode/
