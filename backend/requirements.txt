@@ -2,3 +2,4 @@ Flask>=3.0,<4
 SQLAlchemy>=2.0,<2.2
 cryptography>=43
 pytest>=8
+python-dotenv>=1.0
