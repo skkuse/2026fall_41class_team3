@@ -104,7 +104,7 @@ def test_login_routes_end_to_end(tmp_path, monkeypatch):
     me = {"student_id": "kim01", "domain": 0}
     assert c.get("/api/me").get_json() == {"user": None, "needs_onboarding": False}
     r = c.post("/api/auth/email-code", json=me)
-    assert r.status_code == 200 and r.get_json()["expires_in"] == 600
+    assert r.status_code == 200 and r.get_json()["expires_in"] == 180
     assert c.post("/api/auth/email-code", json=me).status_code == 429          # 재발송 10초 대기
     wrong = "000000" if sent["code"] != "000000" else "111111"
     assert c.post("/api/auth/verify", json={**me, "code": wrong}).status_code == 400
