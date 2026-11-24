@@ -1,0 +1,37 @@
+@reference "../index.css";
+
+/* FullCalendar generates these elements. Keep its selectors scoped to this grid. */
+.calendar-grid {
+  --fc-border-color: var(--color-calendar-grid);
+  --fc-page-bg-color: white;
+  --fc-neutral-bg-color: white;
+  --fc-today-bg-color: white;
+}
+
+.calendar-grid .fc-col-header-cell {
+  @apply bg-white py-2 text-[0.78rem] text-[#222];
+}
+
+.calendar-grid .fc-daygrid-day-number {
+  @apply p-1.5 text-[0.8rem] text-[#111] no-underline max-[600px]:p-[3px];
+}
+
+.calendar-grid .fc-daygrid-day-frame {
+  @apply min-h-[86px] max-[600px]:min-h-[60px];
+}
+
+.calendar-grid .fc-day-today .fc-daygrid-day-number {
+  @apply font-[750] text-primary;
+}
+
+.calendar-grid .calendar-day-selected {
+  @apply bg-white inset-ring-1 inset-ring-primary;
+}
+
+.calendar-grid .fc-day-other .fc-daygrid-day-number {
+  @apply text-[#555] opacity-100;
+}
+
+.calendar-grid .fc-event {
+  @apply border-0 bg-transparent;
+}

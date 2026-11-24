@@ -1,0 +1,174 @@
+[
+  {
+    "facultyId": 1,
+    "facultyName": "학부대학",
+    "departments": [
+      { "departmentId": 1, "departmentName": "인문과학계열" },
+      { "departmentId": 2, "departmentName": "사회과학계열" },
+      { "departmentId": 3, "departmentName": "자연과학계열" },
+      { "departmentId": 4, "departmentName": "공학계열" },
+      { "departmentId": 5, "departmentName": "자유전공계열" }
+    ]
+  },
+  {
+    "facultyId": 2,
+    "facultyName": "유학대학",
+    "departments": [{ "departmentId": 6, "departmentName": "유학동양학과" }]
+  },
+  {
+    "facultyId": 3,
+    "facultyName": "문과대학",
+    "departments": [
+      { "departmentId": 7, "departmentName": "국어국문학과" },
+      { "departmentId": 8, "departmentName": "영어영문학과" },
+      { "departmentId": 9, "departmentName": "프랑스어문학과" },
+      { "departmentId": 10, "departmentName": "중어중문학과" },
+      { "departmentId": 11, "departmentName": "독어독문학과" },
+      { "departmentId": 12, "departmentName": "러시아어문학과" },
+      { "departmentId": 13, "departmentName": "한문학과" },
+      { "departmentId": 14, "departmentName": "사학과" },
+      { "departmentId": 15, "departmentName": "철학과" },
+      { "departmentId": 16, "departmentName": "문헌정보학과" }
+    ]
+  },
+  {
+    "facultyId": 4,
+    "facultyName": "사회과학대학",
+    "departments": [
+      { "departmentId": 17, "departmentName": "행정학과" },
+      { "departmentId": 18, "departmentName": "정치외교학과" },
+      { "departmentId": 19, "departmentName": "미디어커뮤니케이션학과" },
+      { "departmentId": 20, "departmentName": "사회학과" },
+      { "departmentId": 21, "departmentName": "사회복지학과" },
+      { "departmentId": 22, "departmentName": "심리학과" },
+      { "departmentId": 23, "departmentName": "소비자학과" },
+      { "departmentId": 24, "departmentName": "아동·청소년학과" },
+      { "departmentId": 25, "departmentName": "글로벌리더학부" },
+      { "departmentId": 26, "departmentName": "휴먼사이언스·사회융합전공" }
+    ]
+  },
+  {
+    "facultyId": 5,
+    "facultyName": "경제대학",
+    "departments": [
+      { "departmentId": 27, "departmentName": "경제학과" },
+      { "departmentId": 28, "departmentName": "통계학과" },
+      { "departmentId": 29, "departmentName": "글로벌경제학과" }
+    ]
+  },
+  {
+    "facultyId": 6,
+    "facultyName": "경영대학",
+    "departments": [
+      { "departmentId": 30, "departmentName": "경영학과" },
+      { "departmentId": 31, "departmentName": "글로벌경영학과" }
+    ]
+  },
+  {
+    "facultyId": 7,
+    "facultyName": "사범대학",
+    "departments": [
+      { "departmentId": 32, "departmentName": "교육학과" },
+      { "departmentId": 33, "departmentName": "한문교육과" },
+      { "departmentId": 34, "departmentName": "수학교육과" },
+      { "departmentId": 35, "departmentName": "컴퓨터교육과" }
+    ]
+  },
+  {
+    "facultyId": 8,
+    "facultyName": "예술대학",
+    "departments": [
+      { "departmentId": 36, "departmentName": "미술학과" },
+      { "departmentId": 37, "departmentName": "디자인학과" },
+      { "departmentId": 38, "departmentName": "무용학과" },
+      { "departmentId": 39, "departmentName": "영상학과" },
+      { "departmentId": 40, "departmentName": "연기예술학과" },
+      { "departmentId": 41, "departmentName": "의상학과" }
+    ]
+  },
+  {
+    "facultyId": 9,
+    "facultyName": "자연과학대학",
+    "departments": [
+      { "departmentId": 42, "departmentName": "생명과학과" },
+      { "departmentId": 43, "departmentName": "수학과" },
+      { "departmentId": 44, "departmentName": "물리학과" },
+      { "departmentId": 45, "departmentName": "화학과" }
+    ]
+  },
+  {
+    "facultyId": 10,
+    "facultyName": "정보통신대학",
+    "departments": [
+      { "departmentId": 46, "departmentName": "전자전기공학부" },
+      { "departmentId": 47, "departmentName": "반도체시스템공학과" },
+      { "departmentId": 48, "departmentName": "소재부품융합공학과" },
+      { "departmentId": 49, "departmentName": "반도체융합공학과" }
+    ]
+  },
+  {
+    "facultyId": 11,
+    "facultyName": "소프트웨어융합대학",
+    "departments": [
+      { "departmentId": 50, "departmentName": "소프트웨어학과" },
+      { "departmentId": 52, "departmentName": "지능형소프트웨어학과" },
+      { "departmentId": 53, "departmentName": "인공지능학과" },
+      { "departmentId": 73, "departmentName": "데이터사이언스융합전공" },
+      { "departmentId": 74, "departmentName": "인공지능융합전공" },
+      { "departmentId": 75, "departmentName": "컬처앤테크놀로지융합전공" },
+      { "departmentId": 76, "departmentName": "자기설계 융합전공" }
+    ]
+  },
+  {
+    "facultyId": 12,
+    "facultyName": "공과대학",
+    "departments": [
+      { "departmentId": 54, "departmentName": "화학공학부" },
+      { "departmentId": 55, "departmentName": "신소재공학부" },
+      { "departmentId": 56, "departmentName": "기계공학부" },
+      { "departmentId": 57, "departmentName": "건설환경공학부" },
+      { "departmentId": 58, "departmentName": "시스템경영공학과" },
+      { "departmentId": 59, "departmentName": "건축학과" },
+      { "departmentId": 60, "departmentName": "나노공학과" },
+      { "departmentId": 61, "departmentName": "양자정보공학과" }
+    ]
+  },
+  {
+    "facultyId": 13,
+    "facultyName": "약학대학",
+    "departments": [
+      { "departmentId": 62, "departmentName": "약학과" },
+      { "departmentId": 63, "departmentName": "바이오신약·규제과학과" }
+    ]
+  },
+  {
+    "facultyId": 14,
+    "facultyName": "생명공학대학",
+    "departments": [
+      { "departmentId": 64, "departmentName": "식품생명공학과" },
+      { "departmentId": 65, "departmentName": "바이오메카트로닉스학과" },
+      { "departmentId": 66, "departmentName": "융합생명공학과" }
+    ]
+  },
+  {
+    "facultyId": 15,
+    "facultyName": "스포츠과학대학",
+    "departments": [{ "departmentId": 67, "departmentName": "스포츠과학과" }]
+  },
+  {
+    "facultyId": 16,
+    "facultyName": "의과대학",
+    "departments": [{ "departmentId": 68, "departmentName": "의학과" }]
+  },
+  {
+    "facultyId": 17,
+    "facultyName": "성균융합원",
+    "departments": [
+      { "departmentId": 69, "departmentName": "글로벌바이오메디컬공학과" },
+      { "departmentId": 71, "departmentName": "에너지학과" },
+      { "departmentId": 72, "departmentName": "배터리학과" },
+      { "departmentId": 77, "departmentName": "AI융합운영전공" },
+      { "departmentId": 78, "departmentName": "산업인공지능전공" }
+    ]
+  }
+]
