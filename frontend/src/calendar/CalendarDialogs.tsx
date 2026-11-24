@@ -153,6 +153,8 @@ export function DepartmentSelector({
   );
 }
 
+const googleCalendarEnabled = false;
+
 const uncertain =
   "등록 결과를 확인하지 못했습니다. Google Calendar에서 일정이 추가됐는지 확인한 후, 없다면 다시 시도해 주세요.";
 
@@ -289,15 +291,17 @@ export function EventDetail({
         )}
         <Button
           type="button"
-          disabled={pending}
+          disabled={!googleCalendarEnabled || pending}
           onClick={
-            calendarPreview
-              ? () =>
-                  setResult({
-                    message:
-                      "예시 일정은 Google Calendar에 등록할 수 없습니다.",
-                  })
-              : addToGoogle
+            !googleCalendarEnabled
+              ? undefined
+              : calendarPreview
+                ? () =>
+                    setResult({
+                      message:
+                        "예시 일정은 Google Calendar에 등록할 수 없습니다.",
+                    })
+                : addToGoogle
           }
         >
           {pending ? "추가 중…" : "Google Calendar에 추가"}
