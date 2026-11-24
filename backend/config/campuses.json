@@ -1,0 +1,24 @@
+{
+  "campuses": [
+    {
+      "id": "자연과학",
+      "name": "자연과학캠퍼스",
+      "center": {
+        "lat": 37.294037,
+        "lng": 126.974516
+      },
+      "service_radius_m": 1000,
+      "default": true
+    },
+    {
+      "id": "인문사회",
+      "name": "인문사회캠퍼스",
+      "center": {
+        "lat": 37.584937,
+        "lng": 126.997078
+      },
+      "service_radius_m": 1000,
+      "default": false
+    }
+  ]
+}

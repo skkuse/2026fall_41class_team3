@@ -22,8 +22,9 @@ def register_api(app) -> None:
     from api.auth.me import bp as me_bp
     from api.auth.routes import bp as auth_bp
     from api.chat import bp as chat_bp
+    from api.map_places import bp as map_places_bp
 
     _configure_session(app)
     register_error_handlers(app)
-    for bp in (auth_bp, me_bp, catalog_bp, chat_bp):
+    for bp in (auth_bp, me_bp, catalog_bp, chat_bp, map_places_bp):
         app.register_blueprint(bp)
