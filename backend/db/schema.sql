@@ -47,7 +47,7 @@ CREATE TABLE email_code (                                   -- 로그인 인증 
     email_hash         TEXT    NOT NULL,                    -- 사용자 레코드가 없을 수 있어 FK 대신 식별값
     code_hash          TEXT    NOT NULL,                    -- HMAC(SECRET_KEY, "email:code"), 원문은 저장하지 않음
     sent_at            TEXT    NOT NULL,
-    expires_at         TEXT    NOT NULL,                    -- 발송 후 10분 (11-22 결정, SRS 3.6.3의 3분에서 변경)
+    expires_at         TEXT    NOT NULL,                    -- 발송 후 3분 (api/auth/settings.py CODE_TTL_SEC = 180, SRS NFR-SEC-03)
     used_at            TEXT,
     attempts           INTEGER NOT NULL DEFAULT 0,          -- 이 코드로 틀린 횟수
     send_count         INTEGER NOT NULL,                    -- 발송 제한 구간 안에서 몇 번째 발송인지
